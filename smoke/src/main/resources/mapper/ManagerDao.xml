@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.smoke.dao.ManagerDao">
+    <select id="queryByIdAndPassword" resultType="Manager">
+        select *
+        from t_manager,t_user
+        where manager_id =#{id}
+        and password=PASSWORD(#{password})
+        and t_user.user_id=t_manager.user_id
+    </select>
+
+    <select id="queryByCookie" resultType="String">
+        select *
+        from t_manager,t_user
+        where t_manager.cookie_value=#{cookieValue}
+    </select>
+
+    <insert id="addCookie">
+        update  t_manager set cookie_value =#{cookieValue} where user_id=#{userId}
+    </insert>
+
+</mapper>

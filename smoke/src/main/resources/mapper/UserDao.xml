@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smoke.dao.UserDao">
+
+    <insert id="addUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId">
+        insert into t_user(user_name) value(#{userName})
+    </insert>
+    <delete id="deleteUser" >
+        delete from t_user where user_id =#{userId};
+    </delete>
+
+    <update id="updateUser">
+        update t_user set user_name=#{userName} where user_id=#{userId}
+    </update>
+
+
+</mapper>

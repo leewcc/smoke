@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smoke.dao.EquipmentDao">
+
+    <resultMap type="Room" id="_room">
+        <id property="roomId" column="room_id"/>
+        <result property="roomName" column="room_name"/>
+    </resultMap>
+    <resultMap type="Equipment" id="_equipment">
+        <result property="equipmentId" column="equipment_id"/>
+        <result property="equipementName" column="equipment_name"/>
+        <association property="room" resultMap="_room"/>
+    </resultMap>
+
+    <resultMap type="Equipment" id="EquipmentView">
+        <result property="equipmentId" column="equipment_id"/>
+        <result property="equipementName" column="equipment_name"/>
+    </resultMap>
+
+    <insert id="addEquipment"  parameterType="Equipment" useGeneratedKeys="true" keyProperty="id">
+        insert into t_equipment(equipment_id,equipment_name,room_id)
+        values (#{equipmentId},#{equipmentName},#{roomId});
+    </insert>
+
+    <delete id="deleteEquipment">
+        delete from t_equipment
+        where id=#{id}
+    </delete>
+
+    <update id="updateEquipment" parameterType="Equipment">
+          update t_equipment
+          <set>
+              <if test="equipmentId!=null">
+                    equipment_id=#{equipmentId},
+              </if>
+              <if test="equipmentName!=null">
+                  equipment_name = #{equipmentName}
+              </if>
+          </set>
+        where id=#{id}
+    </update>
+
+    <select id="queryByRoomId" parameterType="java.lang.Integer" resultType="Equipment">
+        select id,equipment_id,room_id, equipment_name from t_equipment where room_id =#{roomId}
+    </select>
+
+    <select id="queryByEquipmentId" resultType="Equipment">
+        select * from t_equipment where id=#{id}
+    </select>
+
+</mapper>

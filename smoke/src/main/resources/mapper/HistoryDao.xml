@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smoke.dao.HistoryDao">
+
+    <resultMap type="Room" id="_room">
+        <id property="roomId" column="room_id"/>
+        <result property="roomName" column="room_name"/>
+    </resultMap>
+    <resultMap type="Equipment" id="_equipment">
+        <result property="equipmentId" column="equipment_id"/>
+        <result property="equipementName" column="equipment_name"/>
+        <association property="room" resultMap="_room"/>
+    </resultMap>
+
+    <!--<resultMap type="SmokeStatus" id="SmokeStatusView">-->
+<!--1   `        <result property="roomId命名  d" column="room_id 2222221"/>-->
+        <!--<result property="equipmentId" column="equipment_id"/>-->
+        <!--<result property="equipementName" column="equipment_name"/>-->
+        <!--<association property="room" resultMap="_room"/>-->
+    <!--</resultMap>-->
+
+
+    <select id="queryByRoomId" parameterType="java.lang.Integer"  resultType="SmokeStatus" >
+        select room_id,equipment_id, pm1_0,pm2_5,pm10,status,record_time from t_history where room_id =#{roomId} ORDER BY record_time DESC
+    </select>
+
+    <insert id="insertHistory" parameterType="SmokeStatus" >
+        insert into t_history (room_id, equipment_id, pm1_0,pm2_5,pm10,status,record_time) values
+        (#{roomId}, #{equipmentId}, #{pm1_0}, #{pm2_5}, #{pm10},#{status}, #{recordTime} )
+    </insert>
+</mapper>

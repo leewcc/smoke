@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smoke.dao.PhoneDao">
+
+
+    <insert id="addPhone" parameterType="Phone" keyProperty="id" useGeneratedKeys="true">
+        insert into t_phone(user_phone,user_id) values (#{userPhone},#{userId})
+    </insert>
+
+    <delete id="deletePhone">
+        delete from t_phone where id =#{id}
+    </delete>
+
+    <update id="updatePhone">
+        update t_phone set user_phone=#{userPhone} where id =#{id}
+    </update>
+
+    <select id="queryByUserId"  resultType="Phone" parameterType="java.lang.Integer">
+        select id,user_id,user_phone from t_phone where user_id=#{userId}
+    </select>
+
+    <!--<resultMap id="PhoneView" type="Phone">-->
+        <!--<id property="userId" column="user_id"/>-->
+        <!--<result property="userPhone" column="user_phone"/>-->
+    <!--</resultMap>-->
+</mapper>

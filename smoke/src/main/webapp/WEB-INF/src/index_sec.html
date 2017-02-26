@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>smoke</title>
+  <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+  <script src=js/all_data.js></script>
+  <link rel=stylesheet href=http://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css>
+  <script src=js/Barrett.js></script>
+  <script src=js/ajax.js></script>
+  <link href=../dist/css/app.c247f255afa1484e03ab6e149ff254c1.css rel=stylesheet>
+</head>
+<body class=background_black>
+<div id=app>
+<div>
+		<div id="tea_msg">
+			<h2 class="tea_name_sub_heading">{{tea.userName}}</h2>
+		</div>
+		<div class="rooms">
+			<div v-for=" room in rooms"  class="room_link one_room" v-bind:class="room.roomStatus== 0? 'room_normal':'room_warn'" >
+				<router-link :to="{path:'/device', query: { roomId: room.roomId}}" class="room_link_a">
+					<div class="room_name">
+						{{room.roomName}}
+					</div>
+					<div class="room_status" v-bind:class="room.roomStatus== 0? 'color_normal':'color_warn'" ><div class="point"></div></div>
+				</router-link>
+			</div>
+		</div>
+		</div>
+	</div>
+</div>
+<style>
+ .tea_name_sub_heading{
+        padding: 0;
+        margin: 0;
+        font-weight: normal;
+        font-size: 1.2em;
+    }
+	.devices {
+        overflow-x: hidden;
+        background: #17233b;
+        background: linear-gradient(90deg, #0a0f19, #17233b);
+        height: 100vh;
+        color: #ddd;
+    }
+    
+    .dev_sub_nav {
+        position: relative;
+        padding: 1em 0;
+        text-align: center;
+        width: 100vw;
+    }
+    
+    .dev_more {
+        font-size: 2em;
+        position: absolute;
+        line-height: 2rem;
+        left: .5em;
+        font-weight: bolder;
+        text-decoration: none;
+        color: aliceblue;
+    }
+    
+    .dev_header {
+        overflow: hidden;
+        padding: .8em 0em;
+        border-bottom: .1em solid;
+    }
+    
+    .dev_heading {
+        background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#bdbfc2), to(#ffffff));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0;
+        text-align: center;
+        width: 100vw;
+    }
+    
+    .dev_status {
+        padding: 1em 0.2em;
+        overflow: hidden;
+    }
+    
+    .dev_header_name {
+        float: left;
+    }
+    
+    .dev_header_time {
+        float: right;
+    }
+    
+    .dev_container {
+        background: rgb(12, 19, 31);
+        background: linear-gradient(to right, #0a0f19, #17233b);
+        margin: 1% 1em;
+    }
+    
+    .dev_history {
+        margin: 2em auto;
+        padding: 1em 2em;
+        width: 7em;
+        text-align: center;
+        border: .1em solid;
+        display: block;
+        color: white;
+        border-radius: 3em;
+    }
+    
+    .dev_history:hover {
+        background: #0a0f19;
+    }
+    
+    .dev_con_status {
+        width: 23%;
+        padding: 1em 0;
+        display: inline-block;
+        text-align: center;
+        margin-left: 0.1em;
+    }
+    
+    .dev_con_num_show {
+        font-size: 1em;
+        color: aliceblue;
+    }
+    .dev_con_num_show:after{
+    	content: 'ug/cm^3';
+    	font-size: .7em;
+    }
+    
+    .dev_con_normal,
+    .dev_con_warn {
+        float: left;
+        width: 2.6em;
+        height: 2.6em;
+        margin: 0;
+        border-radius: 100%;
+        font-size: 1.5em;
+        font-weight: bolder;
+        line-height: 2.6em;
+        text-align: center;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .dev_con_normal {
+        border: 0.2em solid #039932;
+        background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#039c90), to(#039932));
+    }
+    
+    .dev_history_bn {
+        color: white;
+        text-decoration: none;
+    }
+    
+    .dev_con_warn {
+        border: 0.2em solid #ff5b00;
+        background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#ff5b00), to(#ff0200));
+    }
+    
+    .dev_con_header {
+        display: block;
+        font-size: 0.7em;
+    }
+</style>
+
+<script type=text/javascript src=/js/manifest.9971f068f3d7e08a955d.js></script>
+<script type=text/javascript src=/js/vendor.aa0df6cd407a659e48a7.js></script>
+<script type=text/javascript src=/js/app.179469d872a29daeb3a2.js></script>
+</body>
+</html>

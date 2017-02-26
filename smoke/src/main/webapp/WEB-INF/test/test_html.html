@@ -1,0 +1,152 @@
+<!-- 老师列表 -->
+<div>
+    <h2>老师列表</h2>
+    <div v-if="teachars">
+        <div class="one_tea">
+            <div class="tea_id">老师工号</div>
+            <div class="tea_name">姓名</div>
+            <div class="add_tea">
+                <button type="button" v-on:click="add_tea_button">添加老师</button>
+            </div>
+        </div>
+        <div class="one_tea" v-for="tea in teachars">
+            <div class="tea_id">{{tea.userId}}</div>
+            <div class="tea_name">{{tea.userName}}</div>
+            <div class="tea_bn" v-on:click="change_name(tea.userId)">修改</div>
+        </div>
+    </div>
+    <div v-else class="not_tea">
+        暂无老师信息，请检查是否网络出错
+    </div>
+</div>
+<!-- 点击添加老师按钮之后的东西 -->
+<input type="text" class="tea_name_text" placeholder="请输入老师名字" />
+<button type="text">提交完毕</button>
+<div class="updata_teacher">
+    <h1 class="updata_heading">修改老师信息</h1>
+    <div class="updata_container">
+        <div class="updata_head">
+            <button class="bn_small updata_bn" v-on:click="return_back()">返回</button>
+        </div>
+        <div class="updata_content">
+            <div class="updata_one_input">
+                <label class="updata_label lb_name" for="u_user_name">姓名</label>
+                <input id="u_user_name" type="text" name="user_name" value="{{{temp.userName}}" disabled="disabled">
+            </div>
+            <div class="updata_one_input">
+                <label class="updata_label lb_name">手机号</label>
+                <div class="updata_one_input" v-for="tele in temp.userPhone">
+                    <input class="u_user_tele" id="u_user_tele{{$index}}" type="text" name="user_name" value="{{tele.userPhone}}">
+                    <div v-on:click="updata_user_phone(tele.userId, tele.userPhone, $index)">修改</div>
+                    <div v-on:click="delete_user_phone(tele.phoneId,tele.userId, tele.userPhone, $index)">删除</div>
+                </div>
+                <div v-on:click="add_user_phone($index, tele.userId)">添加手机号</div>
+            </div>
+            <div class="updata_one_input">
+                <label class="updata_label lb_name">房间</label>
+                <div class="updata_one_input" v-for="room in temp.rooms">
+                    <input class="u_user_room" id="u_user_room{{$index}}" type="text" name="user_name" value="{{room.roomName}}">
+                    <div v-on:click="updata_user_room($index, room.roomId)">修改</div>
+                    <div v-on:click="delete_user_room($index, room.roomId)">删除</div>
+                    <div class="rooms_equi_list">
+                        <label class="updata_label lb_name">设备</label>
+                        <div class="rooms_equi" v-for="equi in room.equipments">
+                            <input class="u_user_equi" id="u_user_equi{{$index}}" type="text" name="user_name" value="{{tele.userPhone}}">
+                            <div v-on:click="updata_user_equi($index, room.roomId,equi.equipmentId)">修改</div>
+                            <div v-on:click="delete_user_equi($index, room.roomId,equi.equipmentId)">删除</div>
+                        </div>
+                        <div v-on:click="add_user_equi($index, room.roomId)">添加设备</div>
+                    </div>
+                </div>
+                <div v-on:click="add_user_rooms($index, temp.userId)">添加房间</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 管理员主页 -->
+<div>
+    <h2>老师列表</h2>
+    <div v-if="show_teacher()">
+        <div class="one_tea">
+            <div class="tea_id">老师工号</div>
+            <div class="tea_name">姓名</div>
+            <div class="tea_tele">电话</div>
+            <div class="add_tea">
+                <button type="button" v-on:click="add_tea_button">添加老师</button>
+            </div>
+        </div>
+        <div class="one_tea" v-for="tea in teachers">
+            <div class="tea_id">{{tea.userId}}</div>
+            <div class="tea_name">{{tea.userName}}</div>
+            <div class="tea_tele">{{tea.phones.length!=0?tea.phones[0]:'+ '无'+'}}</div>
+            <div class="tea_bn" v-on:click="change_name(tea.userId, tea.userName)">修改</div>
+            <router-link class="tea_bn" :to={path: "/updata", params:{index: $index}}>修改</router-link>
+            <div class="tea_bn" v-on:click="delete_tea(tea.userId)">删除</div>
+            <div class="tea_bn" v-on:click="show_device(tea.userId)">展开</div>
+        </div>
+    </div>
+    <div v-else class="not_tea">暂无老师信息，请检查是否网络出错</div>
+</div>
+<!-- 修改信息 -->
+<div class="updata_head">
+    <div>
+        <h2>老师列表</h2>
+        <div v-if="teachars">
+            <div class="one_tea">
+                <div class="tea_id">老师工号</div>
+                <div class="tea_name">姓名</div>
+                <div class="add_tea">
+                    <button type="button" v-on:click="add_tea_button">添加老师</button>
+                </div>
+            </div>
+            <div class="one_tea" v-for="tea in teachars">
+                <div class="tea_id">{{tea.userId}}</div>
+                <div class="tea_name">{{tea.userName}}</div>
+                <div class="tea_bn" v-on:click="change_name(tea.userId)">修改</div>
+            </div>
+        </div>
+        <div v-else class="not_tea"> 暂无老师信息，请检查是否网络出错</div>
+    </div>
+    <input type="text" class="tea_name_text" placeholder="请输入老师名字" />
+    <button type="text">提交完毕</button>
+    <div class="updata_teacher">
+        <h1 class="updata_heading">修改老师信息</h1>
+        <div class="updata_container">
+            <div class="updata_head">
+                <button class="bn_small updata_bn" v-on:click="return_back()">返回</button>
+            </div>
+            <div class="updata_content">
+                <div class="updata_one_input">
+                    <label class="updata_label lb_name" for="u_user_name">姓名</label>
+                    <input id="u_user_name" type="text" name="user_name" value="{{{temp.userName}}" disabled="disabled"> </div>
+                <div class="updata_one_input">
+                    <label class="updata_label lb_name">手机号</label>
+                    <div class="updata_one_input" v-for="tele in temp.userPhone">
+                        <input class="u_user_tele" id="u_user_tele{{$index}}" type="text" name="user_name" value="{{tele.userPhone}}">
+                        <div v-on:click="updata_user_phone(tele.userId, tele.userPhone, $index)">修改</div>
+                        <div v-on:click="delete_user_phone(tele.phoneId,tele.userId, tele.userPhone, $index)">删除</div>
+                    </div>
+                    <div v-on:click="add_user_phone($index, tele.userId)">添加手机号</div>
+                </div>
+                <div class="updata_one_input">
+                    <label class="updata_label lb_name">房间</label>
+                    <div class="updata_one_input" v-for="room in temp.rooms">
+                        <input class="u_user_room" id="u_user_room{{$index}}" type="text" name="user_name" value="{{room.roomName}}">
+                        <div v-on:click="updata_user_room($index, room.roomId)">修改</div>
+                        <div v-on:click="delete_user_room($index, room.roomId)">删除</div>
+                        <div class="rooms_equi_list">
+                            <label class="updata_label lb_name">设备</label>
+                            <div class="rooms_equi" v-for="equi in room.equipments">
+                                <input class="u_user_equi" id="u_user_equi{{$index}}" type="text" name="user_name" value="{{tele.userPhone}}">
+                                <div v-on:click="updata_user_equi($index, room.roomId,equi.equipmentId)">修改</div>
+                                <div v-on:click="delete_user_equi($index, room.roomId,equi.equipmentId)">删除</div>
+                            </div>
+                            <div v-on:click="add_user_equi($index, room.roomId)">添加设备</div>
+                        </div>
+                    </div>
+                    <div v-on:click="add_user_rooms($index, temp.userId)">添加房间</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

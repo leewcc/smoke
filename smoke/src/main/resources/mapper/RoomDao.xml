@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smoke.dao.RoomDao">
+
+    <insert id="addRoom" parameterType="Room" useGeneratedKeys="true" keyProperty="roomId">
+        insert into t_room(room_name,user_id)
+        value (#{roomName},#{userId})
+    </insert>
+
+    <update id="updateRoom">
+        update t_room
+        <set>
+            <if test="roomName!=null">
+                room_name=#{roomName},
+            </if>
+        </set>
+        where room_id =#{roomId}
+    </update>
+
+    <delete id="deleteRoom">
+        delete from t_room where room_id =#{roomId}
+    </delete>
+
+    <select id="queryByTeacherId"  parameterType="java.lang.Integer" resultType="Room">
+        select room_id,room_name
+        from t_room
+        where user_id=#{userId}
+    </select>
+
+    <!--<resultMap id="RoomView" type="Room">-->
+        <!--<id column="room_id" property="roomId"/>-->
+        <!--<result column="room_name" property="roomName"/>-->
+    <!--</resultMap>-->
+
+</mapper>

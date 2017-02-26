@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <settings>
+        <!-- changes from the defaults for testing -->
+        <setting name="cacheEnabled" value="false" />
+        <setting name="useGeneratedKeys" value="true" />
+        <setting name="defaultExecutorType" value="REUSE" />
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <typeAliases>
+        <typeAlias alias="Teacher" type="com.smoke.entity.Teacher"/>
+        <typeAlias alias="Room" type="com.smoke.entity.Room"/>
+        <typeAlias alias="Equipment" type="com.smoke.entity.Equipment"/>
+        <typeAlias alias="SmokeStatus" type="com.smoke.entity.SmokeStatus"/>
+        <typeAlias alias="Manager" type="com.smoke.entity.Manager"/>
+        <typeAlias alias="Phone" type="com.smoke.entity.Phone"/>
+        <typeAlias alias="User" type="com.smoke.entity.User"/>
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="jdbc"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://127.0.0.1:3306/smoke?characterEncoding=utf8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mapper/EquipmentDao.xml" />
+        <mapper resource="mapper/HistoryDao.xml" />
+        <mapper resource="mapper/ManagerDao.xml" />
+        <mapper resource="mapper/PhoneDao.xml" />
+        <mapper resource="mapper/RoomDao.xml" />
+        <mapper resource="mapper/TeacherDao.xml" />
+        <mapper resource="mapper/UserDao.xml" />
+    </mappers>
+</configuration>

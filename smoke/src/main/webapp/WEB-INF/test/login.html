@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>登录</title>
+	<link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body  class="background_black">
+	<div class="login">
+		<h1 class="lg_header"  data-text="欢迎登陆本系统">欢迎登陆本系统</h1>
+	  	<div class="lg_container">
+	  		<label for="user_name" class="lg_label">账号</label>
+	  		<input type="text" id="user_name" class="ip lg_ip" name="name" value="cehnjunming" placeholder="账号">
+	  	</div>
+	  	<div class="lg_container">
+	  		<label for="user_password"  class="lg_label">密码</label>
+	  		<input type="text" id="user_password"  class="ip lg_ip" name="password" value="123456" placeholder="密码">
+	  	</div>
+	    <div class="lg_container">
+	    <label for="user_code" class="lg_label">验证码</label>
+	      <img class="lg_code_img" src="/code" alt="验证码"/>
+	      <input type="text" id="user_code" name="code" class="ip lg_ip lg_ip_code" placeholder="请输入验证码" />
+	    </div>
+	    <div class="lg_container lg_container_bn">
+	      <button class="bn bn_big lg_bn_reset" type="reset">重置</button>
+	      <button class="bn bn_big lg_bn_login" type="button" id="bn_login">登录</button>
+	    </div>
+  	</div>
+    <script src=../static/js/Barrett.js></script>
+    <script src=../static/js/ajax.js></script>
+    <script src="../static/js/login.js"></script>
+    <script src=../static/js/mock.js></script>
+    <script src=../static/js/test.js></script>
+</body>
+</html>

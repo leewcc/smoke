@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smoke.dao.TeacherDao">
+
+    <insert id="addTeacher">
+        insert into t_teacher(user_id) value(#{userId})
+    </insert>
+
+    <select id="getAllTeacher" resultType="Teacher">
+        select t_user.user_id ,t_user.user_name from t_teacher,t_user where t_teacher.user_id=t_user.user_id
+    </select>
+    
+    <resultMap id="TeacherView" type="Teacher">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <collection property="rooms"  column="user_id" ofType="Room" select="com.smoke.dao.RoomDao.queryByTeacherId">
+            <result column="room_id" property="roomId"/>
+            <result column="room_name" property="roomName" />
+        </collection>
+        <collection property="phones"  column="user_id" ofType="Phone" select="com.smoke.dao.PhoneDao.queryByUserId">
+            <result column="user_id" property="userId"/>
+            <result column="user_phone" property="userPhone"/>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="_teacher" type="Teacher">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <collection property="phones"  column="user_id" ofType="Phone" select="com.smoke.dao.PhoneDao.queryByUserId">
+            <result column="user_id" property="userId"/>
+            <result column="user_phone" property="userPhone"/>
+        </collection>
+    </resultMap>
+
+    <select id="getTeachers" resultMap="TeacherView">
+        SELECT * FROM t_user INNER JOIN t_teacher ON t_teacher.user_id = t_user.user_id
+    </select>
+    <select id="queryByTeacherId" resultType="Teacher">
+        select room_id,room_name from t_room where user_id=#{userId}
+    </select>
+
+    <select id="getTeachersAndPhone" resultMap="_teacher">
+        select * from t_user inner join t_teacher on t_teacher.user_id=t_user.user_id
+    </select>
+
+
+</mapper>
